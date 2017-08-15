@@ -1,4 +1,4 @@
-package app.warinator.basicmvp.ui;
+package app.warinator.basicmvp.ui.show_list;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ public interface ShowsContract {
 
     interface View extends MvpView {
         void displayShows(List<TvShow> shows);
-
         void displayError(String error);
+        void goToShowDetails(int showId);
     }
 
     interface Presenter extends MvpPresenter<View> {

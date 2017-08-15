@@ -1,4 +1,4 @@
-package app.warinator.basicmvp.ui;
+package app.warinator.basicmvp.ui.show_list;
 
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -14,8 +14,8 @@ import java.util.List;
 import app.warinator.basicmvp.R;
 import app.warinator.basicmvp.data.DummyManager;
 import app.warinator.basicmvp.data.db.model.TvShow;
-import app.warinator.basicmvp.data.loader.ShowsPresenterLoader;
 import app.warinator.basicmvp.ui.adapter.ShowsAdapter;
+import app.warinator.basicmvp.ui.show_details.ShowDetailsActivity;
 
 public class ShowsActivity extends AppCompatActivity implements ShowsContract.View,
         LoaderManager.LoaderCallbacks<ShowsContract.Presenter> {
@@ -30,18 +30,23 @@ public class ShowsActivity extends AppCompatActivity implements ShowsContract.Vi
         super.onCreate(savedInstanceState);
 
         initView();
-
         getSupportLoaderManager().initLoader(LOADER_PRESENTER_ID, null, this);
     }
 
     private void initView() {
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_shows);
 
         rvShows = (RecyclerView) findViewById(R.id.rv_shows);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvShows.setLayoutManager(layoutManager);
 
-        showsAdapter = new ShowsAdapter(this);
+        showsAdapter = new ShowsAdapter(this, new ShowsAdapter.OnShowClickListener() {
+            @Override
+            public void onShowClicked(int id) {
+                presenter.onShowSelected(id);
+            }
+        });
+
         rvShows.setAdapter(showsAdapter);
         rvShows.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
     }
@@ -50,7 +55,6 @@ public class ShowsActivity extends AppCompatActivity implements ShowsContract.Vi
     protected void onResume() {
         super.onResume();
         presenter.attachView(this);
-        presenter.viewIsReady();
     }
 
     @Override
@@ -67,6 +71,8 @@ public class ShowsActivity extends AppCompatActivity implements ShowsContract.Vi
     @Override
     public void onLoadFinished(Loader<ShowsContract.Presenter> loader, ShowsContract.Presenter presenter) {
         this.presenter = presenter;
+        presenter.attachView(this);
+        presenter.viewIsReady();
     }
 
     @Override
@@ -82,5 +88,16 @@ public class ShowsActivity extends AppCompatActivity implements ShowsContract.Vi
     @Override
     public void displayError(String error) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void goToShowDetails(int showId) {
+        startActivity(ShowDetailsActivity.newIntent(this, showId));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.destroy();
     }
 }

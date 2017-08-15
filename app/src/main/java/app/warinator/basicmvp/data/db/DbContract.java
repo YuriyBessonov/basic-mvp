@@ -29,6 +29,7 @@ public class DbContract {
         public static final String COLUMN_OVERVIEW = "overview";
         public static final String COLUMN_VOTE_AVG = "vote_avg";
         public static final String COLUMN_POSTER_PATH = "poster_path";
+        public static final String COLUMN_USER_RATING = "user_rating";
 
         public static Uri buildShowUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);

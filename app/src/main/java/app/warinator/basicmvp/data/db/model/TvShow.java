@@ -16,15 +16,17 @@ public class TvShow {
     private String overview;
     private float voteAverage;
     private String posterPath;
+    private float userRating;
 
     public TvShow(int id, String name, String originalName, String overview,
-                  float voteAverage, String posterPath) {
+                  float voteAverage, String posterPath, float userRating) {
         this.id = id;
         this.name = name;
         this.originalName = originalName;
         this.overview = overview;
         this.voteAverage = voteAverage;
         this.posterPath = posterPath;
+        this.userRating = userRating;
     }
 
     public TvShow() {
@@ -63,7 +65,20 @@ public class TvShow {
             show.posterPath = cursor.getString(posterPathInd);
         }
 
+        int userRatingInd = cursor.getColumnIndex(DbContract.ShowEntry.COLUMN_USER_RATING);
+        if (userRatingInd >= 0) {
+            show.userRating = cursor.getFloat(userRatingInd);
+        }
+
         return show;
+    }
+
+    public float getUserRating() {
+        return userRating;
+    }
+
+    public void setUserRating(float userRating) {
+        this.userRating = userRating;
     }
 
     public int getId() {

@@ -12,4 +12,5 @@ import io.reactivex.Observable;
 public interface IDataManager {
     Observable<List<TvShow>> getShows();
     Observable<TvShow> getShow(int id);
+    Observable<Integer> rateShow(int id, float rating);
 }

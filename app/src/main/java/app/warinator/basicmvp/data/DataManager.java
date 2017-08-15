@@ -20,4 +20,9 @@ public class DataManager implements IDataManager {
     public Observable<TvShow> getShow(int id) {
         return null;
     }
+
+    @Override
+    public Observable<Integer> rateShow(int id, float rating) {
+        return null;
+    }
 }

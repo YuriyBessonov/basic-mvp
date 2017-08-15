@@ -22,9 +22,11 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
 
     private List<TvShow> shows;
     private Context context;
+    private OnShowClickListener onShowClickListener;
 
-    public ShowsAdapter(Context context) {
+    public ShowsAdapter(Context context, OnShowClickListener showClickListener) {
         this.context = context;
+        this.onShowClickListener = showClickListener;
         shows = new ArrayList<>();
     }
 
@@ -60,7 +62,7 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvName;
         TextView tvOriginalName;
         TextView tvRating;
@@ -68,10 +70,20 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
 
         public ViewHolder(View v) {
             super(v);
+            v.setOnClickListener(this);
             tvName = v.findViewById(R.id.tv_name);
             tvOriginalName = v.findViewById(R.id.tv_original_name);
             tvRating = v.findViewById(R.id.tv_rating);
             ivPoster = v.findViewById(R.id.iv_poster);
         }
+
+        @Override
+        public void onClick(View view) {
+            onShowClickListener.onShowClicked(shows.get(getAdapterPosition()).getId());
+        }
+    }
+
+    public interface OnShowClickListener {
+        void onShowClicked(int id);
     }
 }

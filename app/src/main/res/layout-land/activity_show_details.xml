@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/blur"
+              android:orientation="horizontal"
+              android:padding="@dimen/margin_standard">
+
+    <RelativeLayout
+        android:id="@+id/la_show_info"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/colorPrimaryTransp">
+
+        <ImageView
+            android:id="@+id/iv_poster"
+            android:layout_width="@dimen/poster_width"
+            android:layout_height="@dimen/poster_height"
+            android:src="@drawable/poster"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/iv_poster"
+            android:layout_alignTop="@id/iv_poster"
+            android:layout_toRightOf="@id/iv_poster"
+            android:padding="@dimen/margin_half">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_large_x"
+                android:textStyle="normal|bold"
+                tools:text="Игра престолов"/>
+
+            <TextView
+                android:id="@+id/tv_original_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/tv_name"
+                android:layout_below="@id/tv_name"
+                android:textColor="@color/colorGreyLight"
+                tools:text="Game of thrones"/>
+
+            <TextView
+                android:id="@+id/tv_rating_lbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/tv_original_name"
+                android:layout_below="@id/tv_original_name"
+                android:layout_marginTop="@dimen/margin_standard"
+                android:text="@string/rating"
+                android:textSize="@dimen/text_size_large"/>
+
+            <TextView
+                android:id="@+id/tv_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tv_rating_lbl"
+                android:layout_marginLeft="@dimen/margin_half"
+                android:layout_marginTop="@dimen/margin_standard"
+                android:layout_toRightOf="@id/tv_rating_lbl"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold"
+                tools:text="8.1"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_rate_show_lbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_poster"
+            android:layout_marginLeft="@dimen/margin_standard"
+            android:layout_marginTop="@dimen/margin_standard"
+            android:text="@string/rate_show"
+            android:textColor="@color/colorGreyLight"/>
+
+        <RatingBar
+            android:id="@+id/rb_rating"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/tv_rate_show_lbl"
+            android:layout_below="@id/tv_rate_show_lbl"
+            android:isIndicator="false"
+            android:numStars="5"/>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/margin_half"
+        android:layout_weight="1"
+
+        android:background="@color/colorPrimaryTransp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_standard">
+
+            <TextView
+                android:id="@+id/tv_description_lbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/description"
+                android:textColor="@color/colorGreyLight"
+                android:textSize="@dimen/text_size_bigger"
+                android:textStyle="normal|bold"/>
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_description_lbl"
+                android:layout_marginTop="@dimen/margin_half"
+                tools:text="К концу подходит время благоденствия, и лето, длившееся почти десятилетие, угасает."/>
+        </RelativeLayout>
+    </ScrollView>
+
+
+</LinearLayout>

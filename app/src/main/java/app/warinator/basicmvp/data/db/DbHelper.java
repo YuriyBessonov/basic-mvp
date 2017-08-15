@@ -8,6 +8,7 @@ import static app.warinator.basicmvp.data.db.DbContract.ShowEntry.COLUMN_NAME;
 import static app.warinator.basicmvp.data.db.DbContract.ShowEntry.COLUMN_ORIGINAL_NAME;
 import static app.warinator.basicmvp.data.db.DbContract.ShowEntry.COLUMN_OVERVIEW;
 import static app.warinator.basicmvp.data.db.DbContract.ShowEntry.COLUMN_POSTER_PATH;
+import static app.warinator.basicmvp.data.db.DbContract.ShowEntry.COLUMN_USER_RATING;
 import static app.warinator.basicmvp.data.db.DbContract.ShowEntry.COLUMN_VOTE_AVG;
 
 /**
@@ -28,8 +29,9 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        db.delete(DbContract.ShowEntry.TABLE_NAME, "", null);
+        onCreate(db);
     }
 
     private void addShowsTable(SQLiteDatabase db) {
@@ -40,6 +42,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         COLUMN_ORIGINAL_NAME + " TEXT NOT NULL, " +
                         COLUMN_OVERVIEW + " TEXT NOT NULL, " +
                         COLUMN_VOTE_AVG + " REAL, " +
+                        COLUMN_USER_RATING + " REAL, " +
                         COLUMN_POSTER_PATH + " TEXT " +
                         ");"
         );

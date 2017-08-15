@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/blur"
     android:orientation="vertical"
-    tools:context="app.warinator.basicmvp.ui.ShowsActivity">
+    tools:context="app.warinator.basicmvp.ui.show_list.ShowsActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

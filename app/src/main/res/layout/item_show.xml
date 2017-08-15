@@ -3,8 +3,10 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:background="@color/colorPrimaryTransp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:orientation="vertical"
                 android:padding="@dimen/margin_standard">
 
     <ImageView
@@ -12,16 +14,17 @@
         android:layout_width="@dimen/icon_width_big"
         android:layout_height="@dimen/icon_width_big"
         android:scaleType="centerCrop"
-        android:src="@drawable/pic"/>
+        android:src="@drawable/poster"/>
 
     <TextView
         android:id="@+id/tv_rating"
-        tools:text="7.5"
-        android:textSize="@dimen/text_size_very_large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_size_very_large"
+        tools:text="8.1"/>
 
     <TextView
         android:id="@+id/tv_name"
@@ -31,15 +34,15 @@
         android:layout_toRightOf="@id/iv_poster"
         android:textSize="@dimen/text_size_large"
         android:textStyle="bold"
-        tools:text="Человек-паук"/>
+        tools:text="Игра престолов"/>
 
     <TextView
         android:id="@+id/tv_original_name"
-        tools:text="Spider-man"
-        android:layout_alignStart="@id/tv_name"
         android:layout_width="wrap_content"
-        android:layout_marginTop="@dimen/margin_half"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_name"/>
+        android:layout_alignStart="@id/tv_name"
+        android:layout_below="@id/tv_name"
+        android:layout_marginTop="@dimen/margin_half"
+        tools:text="Game of thrones"/>
 
 </RelativeLayout>

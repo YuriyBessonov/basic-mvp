@@ -1,9 +1,7 @@
-package app.warinator.basicmvp.data.loader;
+package app.warinator.basicmvp.ui.show_list;
 
 import android.content.Context;
 import android.support.v4.content.Loader;
-
-import app.warinator.basicmvp.ui.ShowsContract;
 
 /**
  * Shows presenter loader
