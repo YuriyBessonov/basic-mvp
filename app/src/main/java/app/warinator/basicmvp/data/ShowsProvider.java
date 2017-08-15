@@ -25,7 +25,7 @@ public class ShowsProvider extends ContentProvider {
     private static final UriMatcher uriMatcher = buildUriMatcher();
     private DbHelper dbHelper;
 
-    public static UriMatcher buildUriMatcher(){
+    public static UriMatcher buildUriMatcher() {
         String content = DbContract.AUTHORITY;
 
         UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -46,7 +46,7 @@ public class ShowsProvider extends ContentProvider {
                         @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         final SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor retCursor;
-        switch (uriMatcher.match(uri)){
+        switch (uriMatcher.match(uri)) {
             case SHOW:
                 retCursor = db.query(
                         DbContract.ShowEntry.TABLE_NAME,
@@ -80,7 +80,7 @@ public class ShowsProvider extends ContentProvider {
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
-        switch (uriMatcher.match(uri)){
+        switch (uriMatcher.match(uri)) {
             case SHOW:
                 return DbContract.ShowEntry.CONTENT_TYPE;
             case SHOW_ID:
@@ -97,13 +97,12 @@ public class ShowsProvider extends ContentProvider {
         long _id;
         Uri retUri;
 
-        switch (uriMatcher.match(uri)){
+        switch (uriMatcher.match(uri)) {
             case SHOW:
                 _id = db.insert(DbContract.ShowEntry.TABLE_NAME, null, contentValues);
-                if (_id > 0){
+                if (_id > 0) {
                     retUri = DbContract.ShowEntry.buildShowUri(_id);
-                }
-                else {
+                } else {
                     throw new UnsupportedOperationException("Unable to insert rows into: " + uri);
                 }
                 break;
@@ -120,14 +119,14 @@ public class ShowsProvider extends ContentProvider {
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
         int rows;
 
-        switch (uriMatcher.match(uri)){
+        switch (uriMatcher.match(uri)) {
             case SHOW:
                 rows = db.delete(DbContract.ShowEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             default:
                 throw newUnknownUriEx(uri);
         }
-        if (selection == null || rows != 0){
+        if (selection == null || rows != 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
@@ -140,7 +139,7 @@ public class ShowsProvider extends ContentProvider {
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
         int rows;
 
-        switch (uriMatcher.match(uri)){
+        switch (uriMatcher.match(uri)) {
             case SHOW:
                 rows = db.update(DbContract.ShowEntry.TABLE_NAME, contentValues, selection,
                         selectionArgs);
@@ -149,13 +148,13 @@ public class ShowsProvider extends ContentProvider {
                 throw newUnknownUriEx(uri);
         }
 
-        if (rows != 0){
+        if (rows != 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
         return rows;
     }
 
     private RuntimeException newUnknownUriEx(Uri uri) {
-       return new UnsupportedOperationException("Unknown uri: " + uri);
+        return new UnsupportedOperationException("Unknown uri: " + uri);
     }
 }

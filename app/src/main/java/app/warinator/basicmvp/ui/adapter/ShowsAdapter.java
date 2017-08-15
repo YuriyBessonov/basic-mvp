@@ -1,7 +1,6 @@
 package app.warinator.basicmvp.ui.adapter;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,20 +8,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import app.warinator.basicmvp.R;
-import app.warinator.basicmvp.data.db.DbContract;
+import app.warinator.basicmvp.data.db.model.TvShow;
 
 /**
- * Created by Warinator on 10.08.2017.
+ * Shows  adapter
  */
 
-public class ShowsCursorAdapter extends RecyclerView.Adapter<ShowsCursorAdapter.ViewHolder> {
+public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> {
 
-    private Cursor cursor;
+    private List<TvShow> shows;
     private Context context;
 
-    public ShowsCursorAdapter(Context context){
+    public ShowsAdapter(Context context) {
         this.context = context;
+        shows = new ArrayList<>();
     }
 
     @Override
@@ -34,16 +37,11 @@ public class ShowsCursorAdapter extends RecyclerView.Adapter<ShowsCursorAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        int idIndex = cursor.getColumnIndex(DbContract.ShowEntry._ID);
-        int nameIndex = cursor.getColumnIndex(DbContract.ShowEntry.COLUMN_NAME);
-        int originalNameIndex = cursor.getColumnIndex(DbContract.ShowEntry.COLUMN_ORIGINAL_NAME);
-        int ratingIndex = cursor.getColumnIndex(DbContract.ShowEntry.COLUMN_VOTE_AVG);
-
-        cursor.moveToPosition(position);
-        int id = cursor.getInt(idIndex);
-        String name = cursor.getString(nameIndex);
-        String originalName = cursor.getString(originalNameIndex);
-        String rating = String.valueOf(cursor.getFloat(ratingIndex));
+        TvShow show = shows.get(position);
+        int id = show.getId();
+        String name = show.getName();
+        String originalName = show.getOriginalName();
+        String rating = String.valueOf(show.getVoteAverage());
 
         holder.itemView.setTag(id);
         holder.tvName.setText(name);
@@ -53,24 +51,16 @@ public class ShowsCursorAdapter extends RecyclerView.Adapter<ShowsCursorAdapter.
 
     @Override
     public int getItemCount() {
-        return cursor == null ?
-                0 : cursor.getCount();
+        return shows.size();
     }
 
-    public Cursor swapCursor(Cursor c){
-        if (cursor == c){
-            return null;
-        }
-        Cursor prev = cursor;
-        cursor = c;
-
-        if (c != null){
-            notifyDataSetChanged();
-        }
-        return prev;
+    public void updateShows(List<TvShow> shows) {
+        this.shows.clear();
+        this.shows.addAll(shows);
+        notifyDataSetChanged();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName;
         TextView tvOriginalName;
         TextView tvRating;

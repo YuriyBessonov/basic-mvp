@@ -7,16 +7,16 @@
     android:layout_height="match_parent"
     android:background="@drawable/blur"
     android:orientation="vertical"
-    tools:context="app.warinator.basicmvp.MainActivity">
+    tools:context="app.warinator.basicmvp.ui.ShowsActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#243B55"
+        android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:title="Shurum Burum"/>
+        app:title="@string/tv_shows"/>
 
     <android.support.v7.widget.RecyclerView
         tools:listitem="@layout/item_show"

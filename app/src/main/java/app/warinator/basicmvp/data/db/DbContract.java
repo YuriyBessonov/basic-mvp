@@ -10,9 +10,8 @@ import android.provider.BaseColumns;
 
 public class DbContract {
     public static final String AUTHORITY = "app.warinator.basicmvp";
-    private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
-
     public static final String PATH_SHOW = "show";
+    private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
     public static final class ShowEntry implements BaseColumns {
 
@@ -26,12 +25,12 @@ public class DbContract {
 
         public static final String TABLE_NAME = "shows";
         public static final String COLUMN_NAME = "name";
-        public static final String COLUMN_ORIGINAL_NAME= "original_name";
+        public static final String COLUMN_ORIGINAL_NAME = "original_name";
         public static final String COLUMN_OVERVIEW = "overview";
         public static final String COLUMN_VOTE_AVG = "vote_avg";
         public static final String COLUMN_POSTER_PATH = "poster_path";
 
-        public static Uri buildShowUri(long id){
+        public static Uri buildShowUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
     }
