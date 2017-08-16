@@ -1,12 +1,9 @@
 package app.warinator.basicmvp.data.db.model;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
 import app.warinator.basicmvp.data.db.DbContract;
-
-/**
- * Tv show model
- */
 
 public class TvShow {
 
@@ -71,6 +68,20 @@ public class TvShow {
         }
 
         return show;
+    }
+
+    public ContentValues getContentValues(){
+        ContentValues cv = new ContentValues();
+
+        cv.put(DbContract.ShowEntry._ID, id);
+        cv.put(DbContract.ShowEntry.COLUMN_NAME, name);
+        cv.put(DbContract.ShowEntry.COLUMN_ORIGINAL_NAME, originalName);
+        cv.put(DbContract.ShowEntry.COLUMN_OVERVIEW, overview);
+        cv.put(DbContract.ShowEntry.COLUMN_VOTE_AVG, voteAverage);
+        cv.put(DbContract.ShowEntry.COLUMN_POSTER_PATH, posterPath);
+        cv.put(DbContract.ShowEntry.COLUMN_USER_RATING, userRating);
+
+        return cv;
     }
 
     public float getUserRating() {

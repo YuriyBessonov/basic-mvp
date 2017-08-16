@@ -1,9 +1,4 @@
 package app.warinator.basicmvp.data.network.model;
-
-/**
- * Created by Warinator on 31.07.2017.
- */
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

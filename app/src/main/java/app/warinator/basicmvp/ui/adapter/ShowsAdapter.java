@@ -8,11 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import app.warinator.basicmvp.R;
 import app.warinator.basicmvp.data.db.model.TvShow;
+import app.warinator.basicmvp.utils.GlideApp;
+import app.warinator.basicmvp.utils.NetworkUtils;
 
 /**
  * Shows  adapter
@@ -43,12 +48,16 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
         int id = show.getId();
         String name = show.getName();
         String originalName = show.getOriginalName();
-        String rating = String.valueOf(show.getVoteAverage());
+        String rating = String.format(Locale.getDefault(), "%.1f", show.getVoteAverage());
 
         holder.itemView.setTag(id);
         holder.tvName.setText(name);
         holder.tvOriginalName.setText(originalName);
         holder.tvRating.setText(rating);
+        GlideApp.with(context)
+                .load(NetworkUtils.getPosterURL(show.getPosterPath()))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.ivPoster);
     }
 
     @Override
@@ -60,6 +69,10 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
         this.shows.clear();
         this.shows.addAll(shows);
         notifyDataSetChanged();
+    }
+
+    public interface OnShowClickListener {
+        void onShowClicked(int id);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -81,9 +94,5 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
         public void onClick(View view) {
             onShowClickListener.onShowClicked(shows.get(getAdapterPosition()).getId());
         }
-    }
-
-    public interface OnShowClickListener {
-        void onShowClicked(int id);
     }
 }

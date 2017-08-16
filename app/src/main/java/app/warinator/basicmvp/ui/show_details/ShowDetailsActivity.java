@@ -6,13 +6,18 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import app.warinator.basicmvp.R;
-import app.warinator.basicmvp.data.DummyManager;
+import app.warinator.basicmvp.data.DataManager;
 import app.warinator.basicmvp.data.db.model.TvShow;
+import app.warinator.basicmvp.utils.GlideApp;
+import app.warinator.basicmvp.utils.NetworkUtils;
 
 public class ShowDetailsActivity extends AppCompatActivity implements ShowDetailsContract.View,
         LoaderManager.LoaderCallbacks<ShowDetailsContract.Presenter> {
@@ -27,10 +32,11 @@ public class ShowDetailsActivity extends AppCompatActivity implements ShowDetail
     private TextView tvRating;
     private RatingBar rbRating;
     private TextView tvDescription;
+    private ImageView ivPoster;
     private int showId;
 
 
-    public static Intent newIntent(Context context, int showId){
+    public static Intent newIntent(Context context, int showId) {
         Intent intent = new Intent(context, ShowDetailsActivity.class);
         intent.putExtra(ARG_SHOW_ID, showId);
         return intent;
@@ -48,17 +54,18 @@ public class ShowDetailsActivity extends AppCompatActivity implements ShowDetail
 
     private void initView() {
         setContentView(R.layout.activity_show_details);
-        tvName = (TextView) findViewById(R.id.tv_name);
-        tvOrigName = (TextView) findViewById(R.id.tv_original_name);
-        tvRating = (TextView) findViewById(R.id.tv_rating);
-        tvDescription = (TextView) findViewById(R.id.tv_description);
-        rbRating = (RatingBar) findViewById(R.id.rb_rating);
+        tvName = findViewById(R.id.tv_name);
+        tvOrigName =  findViewById(R.id.tv_original_name);
+        tvRating = findViewById(R.id.tv_rating);
+        tvDescription = findViewById(R.id.tv_description);
+        rbRating = findViewById(R.id.rb_rating);
         rbRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                presenter.rateShow(v*RATING_MULTIPLIER);
+                presenter.rateShow(v * RATING_MULTIPLIER);
             }
         });
+        ivPoster = findViewById(R.id.iv_poster);
     }
 
     @Override
@@ -75,7 +82,8 @@ public class ShowDetailsActivity extends AppCompatActivity implements ShowDetail
 
     @Override
     public Loader<ShowDetailsContract.Presenter> onCreateLoader(int id, Bundle args) {
-        return new ShowDetailsPresenterLoader(this, new ShowDetailsPresenter(showId, new DummyManager()));
+        return new ShowDetailsPresenterLoader(this, new ShowDetailsPresenter(showId,
+                DataManager.getInstance(ShowDetailsActivity.this)));
     }
 
     @Override
@@ -96,7 +104,11 @@ public class ShowDetailsActivity extends AppCompatActivity implements ShowDetail
         tvOrigName.setText(show.getOriginalName());
         tvRating.setText(String.valueOf(show.getVoteAverage()));
         tvDescription.setText(show.getOverview());
-        rbRating.setRating(show.getUserRating()/RATING_MULTIPLIER);
+        rbRating.setRating(show.getUserRating() / RATING_MULTIPLIER);
+        GlideApp.with(this)
+                .load(NetworkUtils.getPosterURL(show.getPosterPath()))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(ivPoster);
     }
 
     @Override

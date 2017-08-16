@@ -31,6 +31,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_standard"
+        android:layout_marginRight="@dimen/margin_standard"
+        android:layout_toLeftOf="@id/tv_rating"
         android:layout_toRightOf="@id/iv_poster"
         android:textSize="@dimen/text_size_large"
         android:textStyle="bold"
@@ -42,7 +44,9 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@id/tv_name"
         android:layout_below="@id/tv_name"
+        android:layout_marginRight="@dimen/margin_standard"
         android:layout_marginTop="@dimen/margin_half"
+        android:layout_toLeftOf="@id/tv_rating"
         tools:text="Game of thrones"/>
 
 </RelativeLayout>

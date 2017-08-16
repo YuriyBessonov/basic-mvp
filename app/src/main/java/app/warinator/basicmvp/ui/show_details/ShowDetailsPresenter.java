@@ -24,10 +24,9 @@ public class ShowDetailsPresenter extends BasePresenter<ShowDetailsContract.View
 
     @Override
     public void viewIsReady() {
-        if (show != null){
+        if (show != null) {
             view.displayShowDetails(show);
-        }
-        else {
+        } else {
             showDisposable = dataManager.getShow(id)
                     .subscribe(new Consumer<TvShow>() {
                         @Override
@@ -46,12 +45,23 @@ public class ShowDetailsPresenter extends BasePresenter<ShowDetailsContract.View
 
     @Override
     public void rateShow(float rating) {
+        dataManager.rateShow(id, rating)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
 
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        view.displayError("Cannot rate show");
+                    }
+                });
     }
 
     @Override
     public void destroy() {
-        if (showDisposable != null && !showDisposable.isDisposed()){
+        if (showDisposable != null && !showDisposable.isDisposed()) {
             showDisposable.dispose();
         }
     }

@@ -12,10 +12,11 @@ import android.widget.Toast;
 import java.util.List;
 
 import app.warinator.basicmvp.R;
-import app.warinator.basicmvp.data.DummyManager;
+import app.warinator.basicmvp.data.DataManager;
 import app.warinator.basicmvp.data.db.model.TvShow;
 import app.warinator.basicmvp.ui.adapter.ShowsAdapter;
 import app.warinator.basicmvp.ui.show_details.ShowDetailsActivity;
+import app.warinator.basicmvp.utils.NetworkUtils;
 
 public class ShowsActivity extends AppCompatActivity implements ShowsContract.View,
         LoaderManager.LoaderCallbacks<ShowsContract.Presenter> {
@@ -36,7 +37,7 @@ public class ShowsActivity extends AppCompatActivity implements ShowsContract.Vi
     private void initView() {
         setContentView(R.layout.activity_shows);
 
-        rvShows = (RecyclerView) findViewById(R.id.rv_shows);
+        rvShows = findViewById(R.id.rv_shows);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvShows.setLayoutManager(layoutManager);
 
@@ -65,7 +66,8 @@ public class ShowsActivity extends AppCompatActivity implements ShowsContract.Vi
 
     @Override
     public Loader<ShowsContract.Presenter> onCreateLoader(int id, Bundle args) {
-        return new ShowsPresenterLoader(this, new ShowsPresenter(new DummyManager()));
+        return new ShowsPresenterLoader(this, new ShowsPresenter(DataManager
+                .getInstance(ShowsActivity.this)));
     }
 
     @Override
@@ -93,6 +95,13 @@ public class ShowsActivity extends AppCompatActivity implements ShowsContract.Vi
     @Override
     public void goToShowDetails(int showId) {
         startActivity(ShowDetailsActivity.newIntent(this, showId));
+    }
+
+    @Override
+    public void checkConnection() {
+        if (!NetworkUtils.isConnectedToNetwork(this)) {
+            Toast.makeText(this, R.string.no_connection, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

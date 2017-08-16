@@ -10,7 +10,7 @@
         android:id="@+id/iv_poster"
         android:layout_width="@dimen/poster_width"
         android:layout_height="@dimen/poster_height"
-        android:src="@drawable/poster"/>
+        android:background="@color/colorPrimaryTransp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,18 +23,22 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textSize="@dimen/text_size_large_x"
             android:textStyle="normal|bold"
             tools:text="Игра престолов"/>
 
         <TextView
             android:id="@+id/tv_original_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_name"
             android:layout_below="@id/tv_name"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/colorGreyLight"
             tools:text="Game of thrones"/>
 

@@ -5,8 +5,11 @@ import java.util.List;
 import app.warinator.basicmvp.data.IDataManager;
 import app.warinator.basicmvp.data.db.model.TvShow;
 import app.warinator.basicmvp.ui.base.BasePresenter;
+import io.reactivex.ObservableSource;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * Shows presenter
@@ -27,20 +30,29 @@ public class ShowsPresenter extends BasePresenter<ShowsContract.View> implements
         if (shows != null) {
             view.displayShows(shows);
         } else {
-            if (showsDisposable != null && !showsDisposable.isDisposed()){
+            view.checkConnection();
+            if (showsDisposable != null && !showsDisposable.isDisposed()) {
                 showsDisposable.dispose();
             }
             showsDisposable = dataManager.getShows()
-                    .subscribe(new Consumer<List<TvShow>>() {
+                    .concatMap(new Function<List<TvShow>, ObservableSource<Integer>>() {
                         @Override
-                        public void accept(List<TvShow> tvShows) throws Exception {
+                        public ObservableSource<Integer> apply(@NonNull List<TvShow> tvShows) throws Exception {
                             shows = tvShows;
                             view.displayShows(shows);
+                            return dataManager.replaceShows(shows);
+                        }
+                    })
+                    .subscribe(new Consumer<Integer>() {
+                        @Override
+                        public void accept(Integer integer) throws Exception {
+
                         }
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
                             view.displayError("Cannot receive shows list");
+                            throwable.printStackTrace();
                         }
                     });
         }
@@ -53,7 +65,7 @@ public class ShowsPresenter extends BasePresenter<ShowsContract.View> implements
 
     @Override
     public void destroy() {
-        if (showsDisposable != null && !showsDisposable.isDisposed()){
+        if (showsDisposable != null && !showsDisposable.isDisposed()) {
             showsDisposable.dispose();
         }
     }

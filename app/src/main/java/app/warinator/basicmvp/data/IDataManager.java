@@ -13,4 +13,5 @@ public interface IDataManager {
     Observable<List<TvShow>> getShows();
     Observable<TvShow> getShow(int id);
     Observable<Integer> rateShow(int id, float rating);
+    Observable<Integer> replaceShows(List<TvShow> newShows);
 }

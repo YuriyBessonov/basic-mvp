@@ -14,8 +14,12 @@ public interface ShowsContract {
 
     interface View extends MvpView {
         void displayShows(List<TvShow> shows);
+
         void displayError(String error);
+
         void goToShowDetails(int showId);
+
+        void checkConnection();
     }
 
     interface Presenter extends MvpPresenter<View> {
